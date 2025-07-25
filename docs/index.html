@@ -1,22 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Document</title>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <meta name="description" content="Description">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+    <meta charset="UTF-8">
+    <title>Cat In K8s</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="Cat In K8s" content="Cat In K8s">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/buble.css">
 </head>
 <body>
-  <div id="app"></div>
-  <script>
+<div id="app"></div>
+<script>
     window.$docsify = {
-      name: '',
-      repo: ''
+        routerMode: 'history',
+        name: '<img src="/image/cat.png" alt="Logo" style="height: 60px; vertical-align: middle;">',
+        repo: 'https://github.com/codax-ai/codax-cat-doc',
+        coverpage: true,
+        onlyCover: true,
+        loadSidebar: true,
+        autoHeader: true,
+        auto2top: true,
+        // 引用格式美化
+        'flexible-alerts': {
+            style: 'flat'
+        },
+        formatUpdated: '{YYYY}/{MM}/{DD}',
     }
-  </script>
-  <!-- Docsify v4 -->
-  <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+</script>
+<!-- Docsify v4 -->
+<script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+<!-- 引用格式美化 https://github.com/fzankl/docsify-plugin-flexible-alerts -->
+<script src="https://unpkg.com/docsify-plugin-flexible-alerts"></script>
 </body>
 </html>
