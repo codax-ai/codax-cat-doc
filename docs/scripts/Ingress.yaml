@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: cat-home-ingress
+  namespace: cat
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: cat-test.codax.cn
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: cat-home-service
+                port:
+                  number: 8080

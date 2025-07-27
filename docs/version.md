@@ -1,5 +1,5 @@
 参考自官网发布内容：
-![img](../image/img2.png)
+![img](image/img2.png)
 
 目前最新的 v4.0-RC1 相比 v3.1.0 的更新内容大致如下：
 

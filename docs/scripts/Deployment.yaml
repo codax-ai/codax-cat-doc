@@ -1,0 +1,50 @@
+apiVersion: apps/v1 # for versions before 1.8.0 use apps/v1beta1
+kind: Deployment
+metadata:
+  name: cat-home
+  namespace: cat
+  labels:
+    app: cat-home
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: cat-home
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: cat-home
+    spec:
+      containers:
+        - name: cat-home
+          image: registry-vpc.cn-shanghai.aliyuncs.com/my_registry/cat:4.0.0
+          ports:
+            - containerPort: 8080
+            - containerPort: 2280
+          env:
+            - name: MYSQL_URL
+              value: "host.docker.internal"
+            - name: MYSQL_PORT
+              value: "3306"
+            - name: MYSQL_USERNAME
+              value: "root"
+            - name: MYSQL_PASSWD
+              value: "123456"
+            - name: MYSQL_SCHEMA
+              value: "cat"
+            - name: CAT_HOME
+              value: "/data/appdatas/cat"
+          volumeMounts:
+            - mountPath: /etc/localtime
+              name: timezone
+      volumes:
+        - hostPath:
+            path: /etc/localtime
+            type: ''
+          name: timezone
