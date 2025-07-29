@@ -12,11 +12,40 @@
 git clone --depth=1 https://github.com/dianping/cat.git
 ```
 
-2. 进入项目根目录，docker 镜像打包。注意：
+2. 4.0-RC1 源码问题修改（可选）
 
-- 相关文件都在项目 docker 目录下。Windows 开发环境需要修改 datasources.sh 文件的编码换行格式从
-  CRLF 改为
-  LF，否则容器启动会报错找不到 env bash
+<details>
+<summary>修改默认管理员密码取配置/环境变量</summary>
+
+```java
+// Component
+public class DefaultCatPropertyProvider implements CatPropertyProvider {
+    public String getProperty(final String name, final String defaultValue) {
+        String value = null;
+
+        // try to get value from system properties, -D<name>=<value>
+        if (value == null) {
+            value = System.getProperty(name);
+        }
+
+        // try to get value from environment variable
+        if (value == null) {
+            value = System.getenv(name);
+        }
+
+        if (StringUtils.isBlank(value)) {
+            return defaultValue;
+        }
+        return value;
+    }
+}
+```
+
+</details>
+
+3. 进入项目根目录，docker 镜像打包（相关文件都在项目 docker 目录下）。注意：
+
+- Windows 开发环境需要修改 datasources.sh 文件的编码换行格式从 CRLF 改为 LF，否则容器启动会报错找不到 env bash
 - 如果打镜像报错无法拉取基础镜像，可以先手动拉取基础镜像`docker pull maven:3.8.4-openjdk-8`、
   `docker pull tomcat:8.5.41-jre8-alpine`
 

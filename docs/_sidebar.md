@@ -7,4 +7,4 @@
 * <b>相关资料</b>
     * [官网介绍](link/guide "实时应用监控平台 Cat")
     * [整体设计](link/design "深度剖析开源分布式监控 CAT 美团技术团队")
-    * [部署问题](link/deploy)
+    * [其他部署](link/deploy)
