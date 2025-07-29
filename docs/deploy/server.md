@@ -527,7 +527,7 @@ metadata:
     kubernetes.io/metadata.name: cat
 ```
 
-2. 部署 Cat Deployment，这里指定副本集个数为 1
+2. 部署 Cat Deployment，这里指定节点亲和性，保证本地存储在指定节点上
 
 ```yaml
 apiVersion: apps/v1 # for versions before 1.8.0 use apps/v1beta1
@@ -538,7 +538,7 @@ metadata:
   labels:
     app: cat-home
 spec:
-  replicas: 1
+  replicas: 2
   revisionHistoryLimit: 10
   selector:
     matchLabels:
@@ -553,6 +553,15 @@ spec:
       labels:
         app: cat-home
     spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/hostname
+                    operator: In
+                    values:
+                      - cn-shanghai.10.20.99.10
       containers:
         - name: cat-home
           image: registry-vpc.cn-shanghai.aliyuncs.com/my_registry/cat:4.0.0
@@ -561,11 +570,11 @@ spec:
             - containerPort: 2280
           env:
             - name: MYSQL_URL
-              value: "127.0.0.1"
+              value: "cat-mysql-service"
             - name: MYSQL_PORT
               value: "3306"
             - name: MYSQL_USERNAME
-              value: "root"
+              value: "cat"
             - name: MYSQL_PASSWD
               value: "123456"
             - name: MYSQL_SCHEMA
@@ -577,11 +586,17 @@ spec:
           volumeMounts:
             - mountPath: /etc/localtime
               name: timezone
+            - mountPath: /data/appdatas/cat/bucket
+              name: storage-pv
       volumes:
         - hostPath:
             path: /etc/localtime
             type: ''
           name: timezone
+        - hostPath:
+            path: /data/appdatas/cat/bucket
+            type: DirectoryOrCreate
+          name: storage-pv
 ```
 
 3. 部署 Cat Service
@@ -639,13 +654,5 @@ spec:
 ```host
 127.0.0.1 cat-test.codax.cn
 ```
-
-### Cat 集群部署（后续规划中）
----
-
-1. 增加副本集个数
-2. 创建 Hadoop 集群
-3. Cat 连接 Hadoop 集群
-4. Cat 指定告警机、统计机
 
 {docsify-updated}
