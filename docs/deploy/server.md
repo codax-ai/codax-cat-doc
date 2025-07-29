@@ -572,6 +572,8 @@ spec:
               value: "cat"
             - name: CAT_HOME
               value: "/data/appdatas/cat"
+            - name: CAT_ADMIN_PWD
+              value: "123456"
           volumeMounts:
             - mountPath: /etc/localtime
               name: timezone
