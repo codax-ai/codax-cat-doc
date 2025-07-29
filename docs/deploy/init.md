@@ -1,5 +1,6 @@
 服务端部署完成后，可以直接访问管理后台 /cat，默认账号密码为 admin admin，密码可以在服务端环境变量配置。
-![img](../image/img3.png)
+
+![img](../image/img3.png ':size=80%')
 
 点击上方的 Application 发现报错，我们需要先点击 Configs 进行一些配置。切换到左侧的全局系统配置：
 
