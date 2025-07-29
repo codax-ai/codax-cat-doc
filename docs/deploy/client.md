@@ -23,15 +23,22 @@ mvn clean deploy -DskipTests
 
 2. 项目新建文件 src/main/resources/META-INF/app.properties, 在其中配置项目名：`app.name=项目名`
 
-3. 项目部署文件 Deployment.yaml 中添加客户端配置文件映射，指向 ConfigMap 中的 client.xml
+3. 项目部署文件 Deployment.yaml 中添加客户端配置文件 /root/.cat/client.xml 映射，指向 ConfigMap 中的 client.xml
 
 ```yaml
-          env:
-            - name: cat-client-config
-              valueFrom:
-                configMapKeyRef:
-                  name: cat-client-config
-                  key: client.xml
+apiVersion: apps/v1
+kind: Deployment
+spec:
+  spec:
+    containers:
+      - volumeMounts:
+          - mountPath: /root/.cat/client.xml
+            name: client-pv
+            subPath: client.xml
+    volumes:
+      - name: client-pv
+        configMap:
+          name: cat-client-config
 ```
 
 ### 部署项目
